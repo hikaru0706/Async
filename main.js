@@ -6,9 +6,8 @@ const API_KEY="https://opentdb.com/api.php?amount=10&type=multiple";
 let clicked;
 // this variable shows the number of correct answers, in result page,this variable will be used.
 let correct;
-// this is from API,question will be stored
+// this is from API,question will be stored,this variable is used only in this scope,hense it is declared this position.
 let globalJson;
-
 
 document.getElementById("btn").addEventListener("click",function(e){
 
@@ -16,11 +15,12 @@ document.getElementById("btn").addEventListener("click",function(e){
     clicked=0;
     correct=0;
   
-      fetch(apikey)
+      fetch(API_KEY)
       .then(response => response.json())
       .then(json => {
         globalJson = json;
         display(json,0);
+        console.log(globalJson.results);
       });
   
     document.getElementById("header").innerText = "Is fetching...";
@@ -53,22 +53,22 @@ document.getElementById("btn").addEventListener("click",function(e){
 
 function display(json,clicked){
       
-      const arr = [json.results[clicked].correct_answer].concat(json.results[clicked].incorrect_answers);
+      const choiceArr = [json.results[clicked].correct_answer].concat(json.results[clicked].incorrect_answers);
       
-      let shuffle_array=shuffle(arr);
+      const shuffleArray=shuffle(choiceArr);
   
       document.getElementById("header").innerText = "Question"+Number(clicked+1);
       document.getElementById("category").innerText = "[category] : "+json.results[clicked].category;
       document.getElementById("difficulty").innerText = "[difficulty] : "+json.results[clicked].difficulty;
       document.getElementById("content").innerText = json.results[clicked].question;
       
+      let choiceHtml = "";
       
-      let html="";
+      for (let i=0;i<shuffleArray.length; i++){
       
-      for (let i=0;i<arr.length; i++){
-        html+= `<button class='choice'>`+shuffle_array[i]+`</button><br>`;
+        choiceHtml += `<button class='choice'>`+shuffleArray[i]+`</button><br>`;
       }
-      document.querySelector('#btn').innerHTML = html;
+      document.querySelector('#btn').innerHTML = choiceHtml;
 }
 
 
