@@ -1,10 +1,13 @@
 
 
-var apikey="https://opentdb.com/api.php?amount=10&type=multiple";
+const API_KEY="https://opentdb.com/api.php?amount=10&type=multiple";
 
+// this variable shows the number of click,by referring to this variable,Question will be updated.
 let clicked;
+// this variable shows the number of correct answers, in result page,this variable will be used.
 let correct;
-let global_json;
+// this is from API,question will be stored
+let globalJson;
 
 
 document.getElementById("btn").addEventListener("click",function(e){
@@ -20,21 +23,21 @@ document.getElementById("btn").addEventListener("click",function(e){
     fetch(apikey)
       .then(response => response.json())
       .then(json => {
-        global_json = json;
+        globalJson = json;
         display(json,0);
       });
     }
     
   else if(e.target && e.target.className=="choice"){
 
-          correct += e.target.innerText===global_json.results[clicked].correct_answer ? 1:0;
+          correct += e.target.innerText===globalJson.results[clicked].correct_answer ? 1:0;
           
           clicked++;
 
-          if (clicked==global_json.results.length){
+          if (clicked==globalJson.results.length){
             showresult(correct);
           }else{
-          display(global_json,clicked);
+          display(globalJson,clicked);
           }
     }
     
