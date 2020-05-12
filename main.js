@@ -16,16 +16,16 @@ document.getElementById("btn").addEventListener("click",function(e){
     clicked=0;
     correct=0;
   
-    document.getElementById("header").innerText = "Is fetching...";
-    document.getElementById("content").innerText = "Just a moment please";
-    document.querySelector(".start").style.display = "none";
-  
-    fetch(apikey)
+      fetch(apikey)
       .then(response => response.json())
       .then(json => {
         globalJson = json;
         display(json,0);
       });
+  
+    document.getElementById("header").innerText = "Is fetching...";
+    document.getElementById("content").innerText = "Just a moment please";
+    document.querySelector(".start").style.display = "none";
     }
     
   else if(e.target && e.target.className=="choice"){
