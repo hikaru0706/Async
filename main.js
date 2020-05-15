@@ -1,6 +1,6 @@
 
 
-const API_KEY="https://opentdb.com/api.php?amount=10&type=multiple";
+const API_KEY="https://opentdb.com/api.php?amount=1&type=multiple";
 
 // this variable shows the number of click,by referring to this variable,Question will be updated.
 let clicked;
@@ -41,13 +41,13 @@ document.getElementById("btn").addEventListener("click",function(e){
           }
     }
     
-  else if(e.target && e.target.className=="retry"){
-          window.location.reload();
+  // else if(e.target && e.target.className=="retry"){
+  //         window.location.reload();
 
-          // document.getElementById("header").innerText ="Welcome";
-          // document.getElementById("content").innerText ="Press the following button";
-          // document.querySelector('#btn').innerHTML = "<button class='start'>start</button>";
-  }
+  //         // document.getElementById("header").innerText ="Welcome";
+  //         // document.getElementById("content").innerText ="Press the following button";
+  //         // document.querySelector('#btn').innerHTML = "<button class='start'>start</button>";
+  // }
 });
 
 
@@ -74,16 +74,29 @@ function display(json,clicked){
 
 
 function showresult(correct){
+  
+      
 
       document.getElementById("header").innerText = "Number of correct answers is " + correct ;
       document.getElementById("category").style.display = "none";
       document.getElementById("difficulty").style.display = "none";
       document.getElementById("content").innerText = "Challenge again";
-      document.querySelector('#btn').innerHTML = "<button class='retry'>retry</button>";
+
+      let btn = document.getElementById("btn");
+      let button = document.createElement("button");
+      button.textContent = 'retry';
+      button.id = 'retry';
+      
+      console.log(btn.parentNode);
+      
+      // btn.removeChild(btn.childNodes);
+      btn.parentNode.replaceChild(button,btn);
+      
+      document.getElementById("retry").addEventListener("click",function(){
+          window.location.reload();
+      });
+  
 }
-
-
-
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
