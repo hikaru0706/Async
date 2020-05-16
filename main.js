@@ -1,57 +1,34 @@
 
 
-const API_KEY="https://opentdb.com/api.php?amount=1&type=multiple";
+const API_KEY="https://opentdb.com/api.php?amount=10&type=multiple";
 
 // this variable shows the number of click,by referring to this variable,Question will be updated.
-let clicked;
+let clicked = 0;
 // this variable shows the number of correct answers, in result page,this variable will be used.
-let correct;
+let correct = 0;
 // this is from API,question will be stored,this variable is used only in this scope,hense it is declared this position.
 let globalJson;
 
-document.getElementById("btn").addEventListener("click",function(e){
+document.querySelector(".start").addEventListener("click",function(e){
 
-  if(e.target && e.target.className=="start"){
-    clicked=0;
-    correct=0;
-  
       fetch(API_KEY)
       .then(response => response.json())
       .then(json => {
         globalJson = json;
         display(json,0);
-        console.log(globalJson.results);
+        // console.log(globalJson.results);
       });
-  
+      
+    // set asynchronous procedures in following 
     document.getElementById("header").innerText = "Is fetching...";
     document.getElementById("content").innerText = "Just a moment please";
     document.querySelector(".start").style.display = "none";
-    }
-    
-  else if(e.target && e.target.className=="choice"){
 
-          correct += e.target.innerText===globalJson.results[clicked].correct_answer ? 1:0;
-          
-          clicked++;
-
-          if (clicked==globalJson.results.length){
-            showresult(correct);
-          }else{
-          display(globalJson,clicked);
-          }
-    }
-    
-  // else if(e.target && e.target.className=="retry"){
-  //         window.location.reload();
-
-  //         // document.getElementById("header").innerText ="Welcome";
-  //         // document.getElementById("content").innerText ="Press the following button";
-  //         // document.querySelector('#btn').innerHTML = "<button class='start'>start</button>";
-  // }
 });
 
 
 function display(json,clicked){
+
       
       const choiceArr = [json.results[clicked].correct_answer].concat(json.results[clicked].incorrect_answers);
       
@@ -62,20 +39,46 @@ function display(json,clicked){
       document.getElementById("difficulty").innerText = "[difficulty] : "+json.results[clicked].difficulty;
       document.getElementById("content").innerText = json.results[clicked].question;
       
-      let choiceHtml = "";
+      let btn = document.getElementById("btn");
       
-      for (let i=0;i<shuffleArray.length; i++){
-      
-        choiceHtml += `<button class='choice'>`+shuffleArray[i]+`</button><br>`;
+      console.log("clicked",clicked);
+
+      while (btn.firstChild) {
+        btn.removeChild(btn.lastChild);
       }
-      document.querySelector('#btn').innerHTML = choiceHtml;
+
+      for (let i=0;i<shuffleArray.length; i++){
+    
+        let button = document.createElement("button");
+        let br = document.createElement("br");
+        
+        
+        button.textContent=shuffleArray[i];
+        button.id="choice";
+        btn.appendChild(button);
+        btn.appendChild(br);
+      
+      
+        button.addEventListener("click",function(e){
+           console.log("#");
+           console.log("clicked",clicked);
+           correct += e.target.innerText===globalJson.results[clicked].correct_answer ? 1:0;        
+           clicked++;
+           
+           console.log("clicked",clicked);
+           
+          if (clicked==globalJson.results.length){
+            showresult(correct);
+          }else{
+          display(globalJson,clicked);
+          }           
+           
+        });
+          
+      }
 }
 
-
-
 function showresult(correct){
-  
-      
 
       document.getElementById("header").innerText = "Number of correct answers is " + correct ;
       document.getElementById("category").style.display = "none";
@@ -89,7 +92,6 @@ function showresult(correct){
       
       console.log(btn.parentNode);
       
-      // btn.removeChild(btn.childNodes);
       btn.parentNode.replaceChild(button,btn);
       
       document.getElementById("retry").addEventListener("click",function(){
