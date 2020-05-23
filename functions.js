@@ -1,12 +1,3 @@
-// const hidePreparation = ()=>{
-//     const preparationElem = document.getElementById('preparation');
-//     preparationElem.style.display ='none';
-// };
-
-// const hideQuiz = ()=>{
-//     const quizElem = document.getElementById("quiz");
-//     quizElem.style.display='none';
-// };
 
 const hideCategory= ()=>{
     const categoryElem = document.getElementById("category");
@@ -23,34 +14,8 @@ const refreshContent = ()=>{
     contentElem.innerHTML="If you want to challenge again,please click following button";    
 };
 
-const setRestartButton = ()=>{
-    const buttonElem=document.getElementById("button");
-    
-    const restartElem = document.createElement('p');
-    const restartBtn = document.createElement('button');
-    restartBtn.innerHTML="restart";
-    
-};
-// const hideResult =()=>{
-//     const resultElem = document.getElementById('result');
-//     resultElem.style.display = 'none';
-// };
-
-// const displayPreparation = ()=>{
-//     const preparationElem = document.getElementById('preparation');
-//     preparationElem.style.display= '';
-//     //hide other element
-//     hideQuiz();
-//     hideResult();
-// };
-
 const displayQuiz = (quizInstance,quizNum)=>{
-    //display quiz
-    // const quizElem = document.getElementById('quiz');
-    // quizElem.style.display = '';
 
-    // hidePreparation();
-    // hideResult();
 
     const titleElem = document.getElementById('title');
     const categoryElem= document.getElementById('category');
