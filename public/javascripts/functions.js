@@ -19,40 +19,30 @@ const refreshContent = ()=>{
 let _correctAnswersNum = 0;
 
 const getNumOfQuiz = (quiz)=>{
-        return quiz.length;
+        return quiz.quiz._quizzes.length;
     };
     
 const getCategory = (quiz,index)=>{
 
-        return quiz[index-1].category;
+        return quiz.quiz._quizzes[index-1].category;
     };
     
 const getDifficulty = (quiz,index)=>{
-        return quiz[index-1].difficulty;
+        return quiz.quiz._quizzes[index-1].difficulty;
     };
     
 const getQuestion = (quiz,index)=>{
-        return quiz[index-1].question;
+        return quiz.quiz._quizzes[index-1].question;
     };
 
 const getAnswers=(quiz,index)=>{
-        const correctAnswer = quiz[index-1].correct_answer;
-        const incorrectAnswers = quiz[index-1].incorrect_answers;
-        
-        const answers = incorrectAnswers.slice();
-        answers.push(correctAnswer);
-        
-        for (let i = answers.length-1; i>0; i--){
-            const rand = Math.floor(Math.random()*(i+1));
-            [answers[i],answers[rand]]=[answers[rand],answers[i]];
-        }
-        return answers;
+     return quiz.Answers[index-1];
 };
 
 
 const  countCorrectAnswersNum = (quiz,index,selectedAnswer) =>{
 
-        const correctAnswer = quiz[index-1].correct_answer;
+        const correctAnswer = quiz.quiz._quizzes[index-1].correct_answer;
         if(selectedAnswer===correctAnswer) _correctAnswersNum++;
     };
     
